@@ -1,0 +1,75 @@
+root (object)
+├─ idRun                : string
+├─ choix_optim          : string
+├─ synthese             : array<string>
+├─ configuration        : object
+│  ├─ activationRendement : string   # « "false" » encodé en chaîne, pas booléen
+│  ├─ axeOptimDegrade     : array<number>
+│  ├─ diminutionSOC       : number
+│  ├─ pasDeTemps          : int
+│  ├─ maximumExecTemps    : number
+│  ├─ debutOptim          : string   # ISO-8601 date-time (UTC, ``Z`` suffix)
+│  └─ finOptim            : string   # ISO-8601 date-time (UTC, ``Z`` suffix)
+├─ rapport              : object
+│  ├─ url                 : string   # URL de suivi
+│  └─ resultUrl           : string   # URL du résultat
+├─ sources              : array<object>
+│  └─ item (object)
+│     ├─ id               : string
+│     ├─ libelle          : string
+│     ├─ pMax             : array<number>
+│     ├─ tranches         : array<object>
+│     │  └─ tranche (object)
+│     │     ├─ id            : string
+│     │     ├─ cout          : number
+│     │     ├─ dateDebut     : string   # YYYY-MM-DD
+│     │     ├─ dateFin       : string
+│     │     └─ heureTranche  : array<object>
+│     │        └─ plage (object)
+│     │           ├─ debut   : number   # heure 0-23
+│     │           └─ fin     : number
+│     └─ transformateurs  : array<object>
+│        └─ transformateur (object)
+│           ├─ id              : string
+│           ├─ libelle         : string
+│           ├─ etat            : string   # ex. "online"
+│           ├─ rendement       : array<object>
+│           │  └─ point (object) { x:number, y:number }
+│           ├─ facteurPuissance: number
+│           ├─ pMax            : number
+│           └─ chargeurs       : array<object>
+│              └─ chargeur (object)
+│                 ├─ id              : string
+│                 ├─ libelle         : string
+│                 ├─ etat            : string
+│                 ├─ pMax            : number
+│                 ├─ typeChargeur    : string
+│                 ├─ mutualisation   : object
+│                 │  ├─ nombrePrises        : number
+│                 │  └─ configsMutualisation: array<object>
+│                 │     └─ config (object) { configMutualisation: array<number> }
+│                 ├─ rendement       : array<object> (x,y comme ci-dessus)
+│                 └─ prises          : array<object>
+│                    └─ prise (object)
+│                       ├─ id       : string
+│                       ├─ libelle  : string
+│                       ├─ etat     : string
+│                       ├─ typePrise: string
+│                       └─ pMax     : number
+└─ vehicules            : array<object>
+   └─ vehicule (object)
+      ├─ id              : string
+      ├─ capaciteBatterie: number
+      ├─ idPrise         : string       # référence à prise
+      ├─ libelle         : string       
+      ├─ modeBoost       : number
+      ├─ typeChargeur    : array<object>
+      │  └─ { modeleChargeur: string }
+      ├─ typePrise       : string
+      ├─ profilBatterie  : array<object>
+      │  └─ point (object) { x:number, y:number }
+      ├─ soc             : number
+      ├─ socCible        : number
+      ├─ dureeService    : number       # minutes
+      ├─ finService      : string       # ISO-8601 date-time (UTC, ``Z`` suffix)
+      └─ debutService    : string       # ISO-8601 date-time (UTC, ``Z`` suffix)
